@@ -13,7 +13,12 @@ function update() {
 
 	background.move();
 	background.update();
-
+	
+	for (const bullet of player.bullets) {
+		bullet.move();
+		bullet.update();
+	}
+	
 	player.respondTo(keyboard);
 	player.move();
 	player.update();
