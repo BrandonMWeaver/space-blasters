@@ -3,7 +3,7 @@ game.start(update);
 
 const keyboard = new Keyboard;
 
-const background = new Background(game.context, 0, 0, 1280, 720, 0, 1, "assets/background");
+const background = new Background(game.context, 0, 0, 1280, 720, 0, 2, "assets/background");
 
 const player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/player");
 
@@ -32,5 +32,12 @@ function update() {
 	for (const enemy of enemies) {
 		enemy.move();
 		enemy.update();
+
+		for (let i = player.bullets.length - 1; i >= 0; i--) {
+			if (enemy.collidedWith(player.bullets[i])) {
+				enemy.integrity--;
+				player.bullets.splice(i, 1);
+			}
+		}
 	}
 }

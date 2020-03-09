@@ -9,5 +9,6 @@ class Enemy extends Ship {
 		this.context.rotate(180 * Math.PI / 180);
 		this.context.drawImage(this.texture, this.width / -2, this.height / -2, this.width, this.height);
 		this.context.restore();
+		this.delegateState();
 	}
 }
