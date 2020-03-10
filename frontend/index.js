@@ -2,11 +2,9 @@ const game = new Game;
 game.start(update);
 
 const keyboard = new Keyboard;
-
 const background = new Background(game.context, 0, 0, 1280, 720, 0, 2, "assets/background");
-
+const score = new Display(game.context, 50, 50, "20px Consolas", "#fff");
 const player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
-
 const enemies = [];
 
 function update() {
@@ -17,8 +15,15 @@ function update() {
 		game.clear();
 		game.frame++;
 
+		if (game.intervalReached(50)) {
+			game.score++;
+		}
+
 		background.move();
 		background.update();
+
+		score.text = `SCORE: ${game.score}`;
+		score.update();
 
 		player.respondTo(keyboard);
 		player.move();
@@ -73,8 +78,9 @@ function update() {
 }
 
 function gameOver() {
+	if (!player.isFunctional()) { return true; }
 	for (const enemy of enemies) {
-		if (enemy.y >= background.height || !player.isFunctional()) {
+		if (enemy.y >= background.height) {
 			return true;
 		}
 	}
