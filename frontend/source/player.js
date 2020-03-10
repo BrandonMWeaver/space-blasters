@@ -22,7 +22,7 @@ class Player extends Ship {
 				10,
 				0,
 				-30,
-				"./assets/bullet-2")
+				"./assets/bullet-1")
 			);
 			this.canFire = false;
 			this.fireInterval = 5;

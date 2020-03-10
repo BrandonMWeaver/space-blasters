@@ -25,7 +25,8 @@ class Ship extends Entity {
 			case 4: variablePath = `${variablePath}-damage-1`; break;
 			case 3: variablePath = `${variablePath}-damage-2`; break;
 			case 2: variablePath = `${variablePath}-damage-3`; break;
-			case 1: variablePath = `${variablePath}-damage-4`;
+			case 1: variablePath = `${variablePath}-damage-4`; break;
+			case 0: variablePath = `${variablePath}-damage-5`;
 		}
 		if (this.turboActive) { variablePath = `${variablePath}-turbo`; }
 		this.texture.src = `${variablePath}.png`;
