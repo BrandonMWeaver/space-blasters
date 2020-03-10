@@ -22,17 +22,17 @@ class Player extends Ship {
 				10,
 				0,
 				-30,
-				"./assets/bullet")
+				"./assets/bullet-2")
 			);
 			this.canFire = false;
 			this.fireInterval = 5;
 		}
-		if (keyboard.keys[37] && this.x > 0) { this.xSpeed = -10; }
-		if (keyboard.keys[39] && this.x < 1240) { this.xSpeed = 10; }
-		if (keyboard.keys[38] && this.y > 0) {
+		if (keyboard.keys[65] && this.x > 0) { this.xSpeed = -10; }
+		if (keyboard.keys[68] && this.x < 1240) { this.xSpeed = 10; }
+		if (keyboard.keys[87] && this.y > 0) {
 			this.ySpeed = -5;
 			this.turboActive = true;
 		} else { this.turboActive = false; }
-		if (keyboard.keys[40] && this.y < 680) { this.ySpeed = 5; }
+		if (keyboard.keys[83] && this.y < 680) { this.ySpeed = 5; }
 	}
 }

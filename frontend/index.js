@@ -5,7 +5,7 @@ const keyboard = new Keyboard;
 
 const background = new Background(game.context, 0, 0, 1280, 720, 0, 2, "assets/background");
 
-const player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/player");
+const player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-2");
 
 const enemies = [];
 
@@ -26,7 +26,7 @@ function update() {
 	player.update();
 
 	if (game.intervalReached(250)) {
-		enemies.push(new Enemy(game.context, Math.floor(Math.random() * 1160) + 40, -40, 40, 40, 0, 1, "assets/player"))
+		enemies.push(new Enemy(game.context, Math.floor(Math.random() * 1160) + 40, -40, 40, 40, 0, 1, "assets/space-ship-1"))
 	}
 
 	for (const enemy of enemies) {
