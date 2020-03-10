@@ -12,14 +12,16 @@ class Ship extends Entity {
 	}
 
 	update() {
-		if (this.isDestroyed() && this.width > 0 && this.height > 0) {
+		if (this.isDestroyed() && this.width > 0) {
 			this.x += 0.5;
-			this.y += 0.5;
 			this.width -= 1;
+		}
+		if (this.isDestroyed() && this.height > 0) {
+			this.y += 0.5;
 			this.height -= 1;
 		}
 	}
-	
+
 	collidedWith(object) {
 		return this.perimeter.bottom < object.perimeter.top ||
 		this.perimeter.top > object.perimeter.bottom ||
@@ -46,6 +48,6 @@ class Ship extends Entity {
 	}
 
 	isDestroyed() {
-		return this.integrity === 0;
+		return this.integrity <= 0;
 	}
 }

@@ -2,7 +2,8 @@ const game = new Game;
 game.start(update);
 
 const keyboard = new Keyboard;
-const background = new Background(game.context, 0, 0, 1280, 720, 0, 2, "assets/background");
+const background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
+const overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
 const score = new Display(game.context, 50, 50, "20px Consolas", "#fff");
 const player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
 const enemies = [];
@@ -21,6 +22,8 @@ function update() {
 
 		background.move();
 		background.update();
+		overlay.move();
+		overlay.update();
 
 		score.text = `SCORE: ${game.score}`;
 		score.update();

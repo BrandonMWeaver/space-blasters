@@ -7,7 +7,7 @@ class Background extends Entity {
 
 	move() {
 		super.move();
-		if (this.y === this.height) {
+		if (this.y >= this.height) {
 			this.y = 0;
 		}
 	}
