@@ -11,6 +11,15 @@ class Ship extends Entity {
 		this.integrity = 5;
 	}
 
+	update() {
+		if (this.isDestroyed() && this.width > 0 && this.height > 0) {
+			this.x += 0.5;
+			this.y += 0.5;
+			this.width -= 1;
+			this.height -= 1;
+		}
+	}
+	
 	collidedWith(object) {
 		return this.perimeter.bottom < object.perimeter.top ||
 		this.perimeter.top > object.perimeter.bottom ||
@@ -30,5 +39,13 @@ class Ship extends Entity {
 		}
 		if (this.turboActive) { variablePath = `${variablePath}-turbo`; }
 		this.texture.src = `${variablePath}.png`;
+	}
+
+	isFunctional() {
+		return this.width > 0;
+	}
+
+	isDestroyed() {
+		return this.integrity === 0;
 	}
 }

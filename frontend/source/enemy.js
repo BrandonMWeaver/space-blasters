@@ -4,12 +4,7 @@ class Enemy extends Ship {
 	}
 
 	update() {
-		if (this.isDestroyed() && this.width > 0 && this.height > 0) {
-			this.x += 0.5;
-			this.y += 0.5;
-			this.width -= 1;
-			this.height -= 1;
-		}
+		super.update();
 		this.context.save();
 		this.context.translate(this.x + this.width / 2, this.y + this.height / 2);
 		this.context.rotate(180 * Math.PI / 180);
@@ -18,7 +13,21 @@ class Enemy extends Ship {
 		this.delegateState();
 	}
 
-	isDestroyed() {
-		return this.integrity === 0;
+	fireIfAble() {
+		if (this.fireInterval > 0) { this.fireInterval--; } else { this.canFire = true; }
+		if (!this.isDestroyed() && this.canFire) {
+			this.bullets.push(new Bullet(
+				this.context,
+				this.x + 18,
+				this.y + 40,
+				4,
+				10,
+				0,
+				10,
+				"./assets/bullet-2")
+			);
+			this.canFire = false;
+			this.fireInterval = 150;
+		}
 	}
 }

@@ -16,37 +16,54 @@ function update() {
 	else {
 		game.clear();
 		game.frame++;
-		
+
 		background.move();
 		background.update();
-		
-		for (const bullet of player.bullets) {
-			bullet.move();
-			bullet.update();
-		}
-	
+
 		player.respondTo(keyboard);
 		player.move();
 		player.update();
-	
+
+		for (let i = player.bullets.length - 1; i >= 0; i--) {
+			player.bullets[i].move();
+			player.bullets[i].update();
+			if (player.bullets[i].y <= -40) {
+				player.bullets.splice(i, 1);
+			}
+		}
+		
 		if (game.intervalReached(100)) {
 			enemies.push(new Enemy(game.context, Math.floor(Math.random() * 1160) + 40, -40, 40, 40, 0, 1, "assets/space-ship-2"))
 		}
-	
+
 		for (let i = enemies.length - 1; i >= 0; i--) {
-			if (enemies[i].width === 0) {
+			if (!enemies[i].isFunctional()) {
 				enemies.splice(i, 1);
 			}
 		}
-	
+
 		for (const enemy of enemies) {
-			if (enemy.width !== 0) {
+			for (let i = enemy.bullets.length - 1; i >= 0; i--) {
+				enemy.bullets[i].move();
+				enemy.bullets[i].update();
+
+				if (player.collidedWith(enemy.bullets[i])) {
+					player.integrity--;
+					enemy.bullets.splice(i, 1);
+				}
+				else if (enemy.bullets[i].y >= background.height) {
+					enemy.bullets.splice(i, 1);
+				}
+			}
+
+			if (enemy.isFunctional()) {
 				enemy.move();
 				enemy.update();
+				enemy.fireIfAble();
 			}
-		
+
 			for (let i = player.bullets.length - 1; i >= 0; i--) {
-				if (enemy.collidedWith(player.bullets[i]) && !enemy.isDestroyed()) {
+				if (!enemy.isDestroyed() && enemy.collidedWith(player.bullets[i])) {
 					enemy.integrity--;
 					player.bullets.splice(i, 1);
 				}
@@ -57,7 +74,7 @@ function update() {
 
 function gameOver() {
 	for (const enemy of enemies) {
-		if (enemy.y === background.height) {
+		if (enemy.y >= background.height || !player.isFunctional()) {
 			return true;
 		}
 	}

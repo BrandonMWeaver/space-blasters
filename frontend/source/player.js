@@ -4,6 +4,7 @@ class Player extends Ship {
 	}
 
 	update() {
+		super.update();
 		this.context.drawImage(this.texture, this.x, this.y, this.width, this.height);
 		this.delegateState();
 	}
@@ -11,28 +12,29 @@ class Player extends Ship {
 	respondTo(keyboard) {
 		this.xSpeed = 0;
 		this.ySpeed = 0;
-		if (this.fireInterval > 0) { this.fireInterval--; } else { this.canFire = true; }
-		if (this.bullets.length > 20) { this.bullets.shift(); }
-		if (keyboard.keys[32] && this.canFire) {
-			this.bullets.push(new Bullet(
-				this.context,
-				this.x + 18,
-				this.y,
-				5,
-				10,
-				0,
-				-30,
-				"./assets/bullet-1")
-			);
-			this.canFire = false;
-			this.fireInterval = 5;
+		if (!this.isDestroyed()) {
+			if (this.fireInterval > 0) { this.fireInterval--; } else { this.canFire = true; }
+			if (keyboard.keys[32] && this.canFire) {
+				this.bullets.push(new Bullet(
+					this.context,
+					this.x + 18,
+					this.y,
+					4,
+					10,
+					0,
+					-30,
+					"./assets/bullet-1")
+				);
+				this.canFire = false;
+				this.fireInterval = 5;
+			}
+			if (keyboard.keys[65] && this.x > 0) { this.xSpeed = -10; }
+			if (keyboard.keys[68] && this.x < 1240) { this.xSpeed = 10; }
+			if (keyboard.keys[87] && this.y > 0) {
+				this.ySpeed = -5;
+				this.turboActive = true;
+			} else { this.turboActive = false; }
+			if (keyboard.keys[83] && this.y < 680) { this.ySpeed = 5; }
 		}
-		if (keyboard.keys[65] && this.x > 0) { this.xSpeed = -10; }
-		if (keyboard.keys[68] && this.x < 1240) { this.xSpeed = 10; }
-		if (keyboard.keys[87] && this.y > 0) {
-			this.ySpeed = -5;
-			this.turboActive = true;
-		} else { this.turboActive = false; }
-		if (keyboard.keys[83] && this.y < 680) { this.ySpeed = 5; }
 	}
 }
