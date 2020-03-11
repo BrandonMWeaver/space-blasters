@@ -5,6 +5,7 @@ class Display {
 		this.y = y;
 		this.context.font = font;
 		this.context.fillStyle = color;
+		this.context.textBaseline = "top";
 	}
 
 	update() {

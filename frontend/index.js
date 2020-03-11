@@ -6,7 +6,7 @@ let paused = false;
 let keyboard = new Keyboard;
 let background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
 let overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
-let score = new Display(game.context, 50, 50, "20px Consolas", "#fff");
+let score = new Display(game.context, 10, 10, "20px Orbitron", "#fff");
 let player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
 let enemies = [];
 
@@ -22,12 +22,11 @@ addEventListener("keydown", event => {
 	if (event.keyCode === 80) {
 		if (paused) {
 			game.resume(update);
-			paused = !paused;
 		}
-		else if (game.isPausable) {
+		else {
 			game.stop();
-			paused = !paused;
 		}
+		paused = !paused;
 	}
 });
 
@@ -122,9 +121,11 @@ function restartGame() {
 	keyboard = new Keyboard;
 	background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
 	overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
-	score = new Display(game.context, 50, 50, "20px Consolas", "#fff");
+	score = new Display(game.context, 10, 10, "20px Orbitron", "#fff");
 	player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
 	enemies = [];
+
+	paused = false;
 
 	game.start(update);
 }
