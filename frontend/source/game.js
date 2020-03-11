@@ -1,6 +1,6 @@
 class Game {
-	constructor() {
-		this.canvas = document.createElement("canvas");
+	constructor(canvas) {
+		this.canvas = canvas;
 		this.canvas.width = 1280;
 		this.canvas.height = 720;
 
@@ -16,6 +16,7 @@ class Game {
 	start(callback) {
 		this.frame = 0;
 		this.score = 0;
+		this.difficulty = 0;
 
 		this.interval = setInterval(callback, 20)
 	}
