@@ -12,6 +12,8 @@ class Game {
 		div.append(this.canvas);
 		document.body.append(div);
 
+		this.isPausable = true;
+
 		this.frame = 0;
 		this.score = 0;
 		this.difficulty = 0;
@@ -21,16 +23,19 @@ class Game {
 		this.frame = 0;
 		this.score = 0;
 		this.difficulty = 0;
-
+		
 		this.interval = setInterval(callback, 20)
+		this.isPausable = true;
 	}
 
 	stop() {
 		clearInterval(this.interval);
+		this.isPausable = false;
 	}
 
 	resume(callback) {
 		this.interval = setInterval(callback, 20)
+		this.isPausable = true;
 	}
 
 	clear() {

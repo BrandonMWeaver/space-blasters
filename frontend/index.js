@@ -22,11 +22,12 @@ addEventListener("keydown", event => {
 	if (event.keyCode === 80) {
 		if (paused) {
 			game.resume(update);
+			paused = !paused;
 		}
-		else {
+		else if (game.isPausable) {
 			game.stop();
+			paused = !paused;
 		}
-		paused = !paused;
 	}
 });
 
