@@ -21,7 +21,7 @@ addEventListener("keydown", event => {
 addEventListener("keydown", event => {
 	if (event.keyCode === 80) {
 		if (paused) {
-			game.start(update);
+			game.resume(update);
 		}
 		else {
 			game.stop();

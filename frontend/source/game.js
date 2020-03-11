@@ -11,6 +11,10 @@ class Game {
 		div.style.textAlign = "center";
 		div.append(this.canvas);
 		document.body.append(div);
+
+		this.frame = 0;
+		this.score = 0;
+		this.difficulty = 0;
 	}
 
 	start(callback) {
@@ -23,6 +27,10 @@ class Game {
 
 	stop() {
 		clearInterval(this.interval);
+	}
+
+	resume(callback) {
+		this.interval = setInterval(callback, 20)
 	}
 
 	clear() {
