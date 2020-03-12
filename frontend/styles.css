@@ -87,7 +87,16 @@ h3 {
 }
 
 .score {
+	overflow: hidden;
 	width: 1280px;
 	margin: 5px auto;
-	background-color: #000;
+	border-bottom: 1px solid #fff;
+}
+
+.score p {
+	float: left;
+}
+
+.score p:nth-child(2) {
+	float: right;
 }

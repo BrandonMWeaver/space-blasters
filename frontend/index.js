@@ -16,18 +16,25 @@ let score;
 let player;
 let enemies;
 
+let leaderboardScores = [];
+
 fetch(`${BASE_URL}/scores`)
 .then(response => response.json())
-.then(object => {
+.then(objectArray => {
 	const leaderboard = document.querySelector(".leaderboard");
-	for (const score of object) {
+	for (const object of objectArray) {
 		const scoreDiv = document.createElement("div");
 		scoreDiv.className = "score";
 
-		const p = document.createElement("p");
-		p.innerHTML = `${score.player.username} ${score.number}`;
+		const username = document.createElement("p");
+		username.innerHTML = object.player.username;
+		const score = document.createElement("p");
+		score.innerHTML = object.number;
 
-		scoreDiv.append(p);
+		leaderboardScores.push(object);
+
+		scoreDiv.append(username);
+		scoreDiv.append(score);
 
 		leaderboard.append(scoreDiv);
 	}
@@ -181,11 +188,11 @@ function postFor(resource) {
 	})
 	.then(response => response.json())
 	.then(object => {
-		if (object.id && object.username) {
-			if (document.querySelector("p#error")) {
-				document.querySelector("p#error").remove();
-			}
+		if (document.querySelector("p#error")) {
+			document.querySelector("p#error").remove();
+		}
 
+		if (object.id && object.username) {
 			currentPlayer = { id: object.id, username: object.username };
 
 			document.querySelector("form").remove();
@@ -209,7 +216,7 @@ function postFor(resource) {
 			const p = document.createElement("p");
 			p.id = "error";
 			p.innerHTML = object.message;
-			document.body.append(p);
+			document.querySelector("form").append(p);
 		}
 	});
 }
@@ -227,5 +234,38 @@ function postScore() {
 		})
 	})
 	.then(response => response.json())
-	.then(object => console.log(object)); //temp
+	.then(object => {
+		for (let i = 0; i < leaderboardScores.length - 10; i++) { leaderboardScores.pop(); }
+		for (let i = 0; i < leaderboardScores.length; i++) {
+			if (object.number > leaderboardScores[i].number) {
+				leaderboardScores.splice(i, 0, object);
+				leaderboardScores.pop();
+				break;
+			}
+		}
+		if (leaderboardScores.length < 10 && !leaderboardScores.includes(object)) {
+			leaderboardScores.push(object);
+		}
+		const leaderboard = document.querySelector(".leaderboard");
+		while(leaderboard.firstChild) {
+			leaderboard.firstChild.remove();
+		}
+		const h3 = document.createElement("h3");
+		h3.innerHTML = "Leaderboard";
+		leaderboard.append(h3);
+		for (const record of leaderboardScores) {
+			const scoreDiv = document.createElement("div");
+			scoreDiv.className = "score";
+
+			const username = document.createElement("p");
+			username.innerHTML = record.player.username;
+			const score = document.createElement("p");
+			score.innerHTML = record.number;
+
+			scoreDiv.append(username);
+			scoreDiv.append(score);
+
+			leaderboard.append(scoreDiv);
+		}
+	});
 }

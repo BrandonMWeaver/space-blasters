@@ -6,7 +6,7 @@ class ScoresController < ApplicationController
 
 	def create
 		score = Score.create(number: params[:number], player_id: params[:id])
-		render json: score
+		render json: score, include: { player: { only: [:username] } }
 	end
 
 end
