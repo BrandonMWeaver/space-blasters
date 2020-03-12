@@ -1,7 +1,7 @@
 class ScoresController < ApplicationController
 
 	def index
-		render json: Score.all, include: { player: { only: [:username] } }
+		render json: Score.top_ten, include: { player: { only: [:username] } }
 	end
 
 	def create

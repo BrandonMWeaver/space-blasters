@@ -6,6 +6,7 @@ class Keyboard {
 
 	initialize(self) {
 		window.addEventListener("keydown", event => {
+			if (event.keyCode === 32) { event.preventDefault(); }
 			self.keys[event.keyCode] = true;
 		});
 		window.addEventListener("keyup", event => {
