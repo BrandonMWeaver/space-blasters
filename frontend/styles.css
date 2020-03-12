@@ -12,6 +12,61 @@ h1 {
 	color: #fff;
 }
 
+.game {
+	margin: 0 auto;
+	text-align: center;
+}
+
+form {
+	width: 1280px;
+	height: 720px;
+	margin: 0 auto;
+	border: 1px dotted #fff;
+	background-image: url("assets/background.png");
+}
+
+label {
+	display: block;
+	font-family: "Orbitron";
+	font-size: 60px;
+	color: #fff;
+}
+
+input {
+	display: block;
+	margin: 0 auto;
+	width: 400px;
+	height: 40px;
+	font-family: "Orbitron";
+	font-size: 20px;
+}
+
+button {
+	display: block;
+	margin: 0 auto;
+	font-family: "Orbitron";
+	font-size: 40px;
+	color: #fff;
+	background: none;
+	border: none;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+p {
+	margin: 0;
+	text-align: center;
+	font-family: "Orbitron";
+	font-size: 20px;
+	color: #fff;
+}
+
+p#error {
+	color: #ff0000;
+}
+
 canvas:hover {
 	cursor: none;
 }

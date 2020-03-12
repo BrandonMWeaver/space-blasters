@@ -5,13 +5,7 @@ class Game {
 		this.canvas.height = 720;
 
 		this.context = this.canvas.getContext("2d");
-
-		const div = document.createElement("div");
-		div.style.margin = "0 auto";
-		div.style.textAlign = "center";
-		div.append(this.canvas);
-		document.body.append(div);
-
+		
 		this.frame = 0;
 		this.score = 0;
 		this.difficulty = 0;
@@ -21,7 +15,7 @@ class Game {
 		this.frame = 0;
 		this.score = 0;
 		this.difficulty = 0;
-		
+
 		this.interval = setInterval(callback, 20);
 	}
 

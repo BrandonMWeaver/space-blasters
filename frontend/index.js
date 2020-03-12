@@ -1,32 +1,69 @@
-let canvas = document.querySelector("canvas");
-let game = new Game(canvas);
+const canvas = document.createElement("canvas");
+const div = document.querySelector(".game");
 
+let currentUser;
+
+let game;
 let paused = false;
 
-let keyboard = new Keyboard;
-let background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
-let overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
-let score = new Display(game.context, 10, 10, "20px Orbitron", "#fff");
-let player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
-let enemies = [];
+let keyboard;
+let background;
+let overlay;
+let user;
+let score;
+let player;
+let enemies;
 
-game.start(update);
+addEventListener("click", event => {
+	event.preventDefault();
+	const username = document.querySelector("#username").value;
+	const password = document.querySelector("#password").value;
 
-addEventListener("keydown", event => {
-	if (event.keyCode === 13) {
-		restartGame();
-	}
-});
+	if (event.target.id === "create") {
+		fetch("http://localhost:3000/players", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				"Accept": "application/json"
+			},
+			body: JSON.stringify({
+				username,
+				password
+			})
+		})
+		.then(response => response.json())
+		.then(object => {
+			if (object.id && object.username) {
+				if (document.querySelector("p#error")) {
+					document.querySelector("p#error").remove();
+				}
+				
+				currentUser = { id: object.id, username: object.username };
 
-addEventListener("keydown", event => {
-	if (event.keyCode === 80) {
-		if (paused) {
-			game.resume(update);
-		}
-		else {
-			game.stop();
-		}
-		paused = !paused;
+				document.querySelector("form").remove();
+				div.append(canvas);
+
+				game = new Game(canvas);
+
+				keyboard = new Keyboard;
+				background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
+				overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
+				user = new Display(game.context, 1270, 10, "20px Orbitron", "#fff", "right")
+				user.text = currentUser.username;
+				score = new Display(game.context, 10, 10, "20px Orbitron", "#fff", "left");
+				player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
+				enemies = [];
+
+				addEventListenersForGame(game)
+				game.start(update);
+			}
+			else {
+				const p = document.createElement("p");
+				p.id = "error";
+				p.innerHTML = object.message;
+				document.body.append(p);
+			}
+		});
 	}
 });
 
@@ -99,6 +136,8 @@ function update() {
 			}
 		}
 
+		user.update();
+
 		score.text = `SCORE: ${game.score}`;
 		score.update();
 	}
@@ -112,6 +151,26 @@ function gameOver() {
 		}
 	}
 	return false;
+}
+
+function addEventListenersForGame(game) {
+	addEventListener("keydown", event => {
+		if (event.keyCode === 13) {
+			restartGame();
+		}
+	});
+	
+	addEventListener("keydown", event => {
+		if (event.keyCode === 80) {
+			if (paused) {
+				game.resume(update);
+			}
+			else {
+				game.stop();
+			}
+			paused = !paused;
+		}
+	});
 }
 
 function restartGame() {
