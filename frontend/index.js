@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:3000";
 const canvas = document.createElement("canvas");
 const div = document.querySelector(".game");
 
-let currentUser;
+let currentPlayer;
 
 let game;
 let paused = false;
@@ -15,6 +15,23 @@ let user;
 let score;
 let player;
 let enemies;
+
+fetch(`${BASE_URL}/scores`)
+.then(response => response.json())
+.then(object => {
+	const leaderboard = document.querySelector(".leaderboard");
+	for (const score of object) {
+		const scoreDiv = document.createElement("div");
+		scoreDiv.className = "score";
+
+		const p = document.createElement("p");
+		p.innerHTML = `${score.player.username} ${score.number}`;
+
+		scoreDiv.append(p);
+
+		leaderboard.append(scoreDiv);
+	}
+});
 
 addEventListener("click", event => {
 	event.preventDefault();
@@ -30,6 +47,7 @@ addEventListener("click", event => {
 
 function update() {
 	if (gameOver()) {
+		postScore();
 		game.stop();
 	}
 	else {
@@ -149,7 +167,7 @@ function restartGame() {
 function postFor(resource) {
 	const username = document.querySelector("#username").value;
 	const password = document.querySelector("#password").value;
-	
+
 	fetch(`${BASE_URL}/${resource}`, {
 		method: "POST",
 		headers: {
@@ -168,7 +186,7 @@ function postFor(resource) {
 				document.querySelector("p#error").remove();
 			}
 
-			currentUser = { id: object.id, username: object.username };
+			currentPlayer = { id: object.id, username: object.username };
 
 			document.querySelector("form").remove();
 			div.append(canvas);
@@ -179,7 +197,7 @@ function postFor(resource) {
 			background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
 			overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
 			user = new Display(game.context, 1270, 10, "20px Orbitron", "#fff", "right")
-			user.text = currentUser.username;
+			user.text = currentPlayer.username;
 			score = new Display(game.context, 10, 10, "20px Orbitron", "#fff", "left");
 			player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
 			enemies = [];
@@ -194,4 +212,20 @@ function postFor(resource) {
 			document.body.append(p);
 		}
 	});
+}
+
+function postScore() {
+	fetch(`${BASE_URL}/scores`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			"Accept": "application/json"
+		},
+		body: JSON.stringify({
+			number: game.score,
+			id: currentPlayer.id
+		})
+	})
+	.then(response => response.json())
+	.then(object => console.log(object)); //temp
 }

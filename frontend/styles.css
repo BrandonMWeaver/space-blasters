@@ -18,10 +18,9 @@ h1 {
 }
 
 form {
+	display: inline-block;
 	width: 1280px;
 	height: 720px;
-	margin: 0 auto;
-	border: 1px dotted #fff;
 	background-image: url("assets/overlay.png"), url("assets/background.png");
 }
 
@@ -73,4 +72,22 @@ p#error {
 
 canvas:hover {
 	cursor: none;
+}
+
+.leaderboard {
+	margin: 10px auto;
+	text-align: center;
+}
+
+h3 {
+	margin: 10px 0 0 0;
+	font-family: "Orbitron";
+	font-size: 20px;
+	color: #fff;
+}
+
+.score {
+	width: 1280px;
+	margin: 5px auto;
+	background-color: #000;
 }
