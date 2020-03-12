@@ -138,10 +138,6 @@ function restartGame() {
 	game.stop();
 	game.clear();
 
-	keyboard = new Keyboard;
-	background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
-	overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
-	score = new Display(game.context, 10, 10, "20px Orbitron", "#fff");
 	player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
 	enemies = [];
 

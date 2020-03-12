@@ -22,7 +22,7 @@ form {
 	height: 720px;
 	margin: 0 auto;
 	border: 1px dotted #fff;
-	background-image: url("assets/background.png");
+	background-image: url("assets/overlay.png"), url("assets/background.png");
 }
 
 label {
@@ -30,6 +30,10 @@ label {
 	font-family: "Orbitron";
 	font-size: 60px;
 	color: #fff;
+}
+
+label:first-child {
+	margin-top: 120px;
 }
 
 input {
