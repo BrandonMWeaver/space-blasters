@@ -44,11 +44,11 @@ addEventListener("click", event => {
 	event.preventDefault();
 
 	if (event.target.id === "create") {
-		postFor("players");
+		postTo("players");
 	}
 
 	if (event.target.id === "find") {
-		postFor("sessions");
+		postTo("sessions");
 	}
 });
 
@@ -171,7 +171,7 @@ function restartGame() {
 	game.start(update);
 }
 
-function postFor(resource) {
+function postTo(resource) {
 	const username = document.querySelector("#username").value;
 	const password = document.querySelector("#password").value;
 

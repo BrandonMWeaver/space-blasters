@@ -6,7 +6,7 @@ class PlayersController < ApplicationController
 		else
 			player = Player.new(username: params[:username], password: params[:password])
 			if player.save
-				render json: player
+				render json: player, only: [:id, :username]
 			else
 				render json: { message: "Username must be 3 characters long and no more than 18 characters<br>Password must be 5 characters long" }
 			end
