@@ -87,7 +87,7 @@ function update() {
 		}
 
 		if (game.intervalReached(100 - 10 * game.difficulty)) {
-			enemies.push(new Enemy(game.context, Math.floor(Math.random() * 1160) + 40, -40, 40, 40, 0, 1, "assets/space-ship-2"));
+			enemies.push(new Enemy(game.context, "assets/space-ship-2", Math.floor(Math.random() * 1160) + 40, -40, 40, 40, 0, 1));
 		}
 
 		for (let i = enemies.length - 1; i >= 0; i--) {
@@ -163,7 +163,7 @@ function restartGame() {
 	game.stop();
 	game.clear();
 
-	player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
+	player = new Player(game.context, "assets/space-ship-1", 600, 660, 40, 40, 0, 0);
 	enemies = [];
 
 	paused = false;
@@ -201,12 +201,12 @@ function postFor(resource) {
 			game = new Game(canvas);
 
 			keyboard = new Keyboard;
-			background = new Background(game.context, 0, 0, 1280, 720, 0, 0.2, "assets/background");
-			overlay = new Background(game.context, 0, 0, 1280, 720, 0, 0.1, "assets/overlay");
+			background = new Background(game.context, "assets/background", 0, 0, 1280, 720, 0, 0.2);
+			overlay = new Background(game.context, "assets/overlay", 0, 0, 1280, 720, 0, 0.1);
 			user = new Display(game.context, 1270, 10, "20px Orbitron", "#fff", "right")
 			user.text = currentPlayer.username;
 			score = new Display(game.context, 10, 10, "20px Orbitron", "#fff", "left");
-			player = new Player(game.context, 600, 660, 40, 40, 0, 0, "assets/space-ship-1");
+			player = new Player(game.context, "assets/space-ship-1", 600, 660, 40, 40, 0, 0);
 			enemies = [];
 
 			addEventListenersForGame(game)
@@ -239,7 +239,9 @@ function postScore() {
 		for (let i = 0; i < leaderboardScores.length; i++) {
 			if (object.number > leaderboardScores[i].number) {
 				leaderboardScores.splice(i, 0, object);
-				leaderboardScores.pop();
+				if (leaderboardScores.length === 11) {
+					leaderboardScores.pop();
+				}
 				break;
 			}
 		}

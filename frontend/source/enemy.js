@@ -1,6 +1,6 @@
 class Enemy extends Ship {
-	constructor(context, x, y, width, height, xSpeed, ySpeed, texturePath) {
-		super(context, x, y, width, height, xSpeed, ySpeed, texturePath);
+	constructor(context, texturePath, x, y, width, height, xSpeed, ySpeed) {
+		super(context, texturePath, x, y, width, height, xSpeed, ySpeed);
 	}
 
 	update() {
@@ -18,13 +18,13 @@ class Enemy extends Ship {
 		if (!this.isDestroyed() && this.canFire) {
 			this.bullets.push(new Bullet(
 				this.context,
+				"./assets/bullet-2",
 				this.x + 18,
 				this.y + 40,
 				4,
 				10,
 				0,
-				10,
-				"./assets/bullet-2")
+				10)
 			);
 			this.canFire = false;
 			this.fireInterval = 150;

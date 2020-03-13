@@ -1,6 +1,6 @@
 class Player extends Ship {
-	constructor(context, x, y, width, height, xSpeed, ySpeed, texturePath) {
-		super(context, x, y, width, height, xSpeed, ySpeed, texturePath);
+	constructor(context, texturePath, x, y, width, height, xSpeed, ySpeed) {
+		super(context, texturePath, x, y, width, height, xSpeed, ySpeed);
 	}
 
 	update() {
@@ -17,13 +17,13 @@ class Player extends Ship {
 			if (keyboard.keys[32] && this.canFire) {
 				this.bullets.push(new Bullet(
 					this.context,
+					"./assets/bullet-1",
 					this.x + 18,
 					this.y,
 					4,
 					10,
 					0,
-					-30,
-					"./assets/bullet-1")
+					-30)
 				);
 				this.canFire = false;
 				this.fireInterval = 5;

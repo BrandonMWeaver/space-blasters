@@ -1,6 +1,8 @@
 class Entity {
-	constructor(context, x = 0, y = 0, width = 0, height = 0, xSpeed = 0, ySpeed = 0) {
+	constructor(context, texturePath, x = 0, y = 0, width = 0, height = 0, xSpeed = 0, ySpeed = 0) {
 		this.context = context;
+		this.texture = new Image;
+		this.texture.src = `${texturePath}.png`;
 		this.x = x;
 		this.y = y;
 		this.width = width;
