@@ -23,8 +23,20 @@ fetch(`${BASE_URL}/scores`)
 .then(objectArray => {
 	const leaderboard = document.querySelector(".leaderboard");
 	for (const object of objectArray) {
-		buildScoreDiv(object, leaderboard);
+		const scoreDiv = document.createElement("div");
+		scoreDiv.className = "score";
+
+		const username = document.createElement("p");
+		username.innerHTML = object.player.username;
+		const score = document.createElement("p");
+		score.innerHTML = object.number;
+
 		leaderboardScores.push(object);
+
+		scoreDiv.append(username);
+		scoreDiv.append(score);
+
+		leaderboard.append(scoreDiv);
 	}
 });
 
@@ -236,32 +248,26 @@ function postScore() {
 		if (leaderboardScores.length < 10 && !leaderboardScores.includes(object)) {
 			leaderboardScores.push(object);
 		}
-		
 		const leaderboard = document.querySelector(".leaderboard");
 		while(leaderboard.firstChild) {
 			leaderboard.firstChild.remove();
 		}
-
 		const h3 = document.createElement("h3");
 		h3.innerHTML = "Leaderboard";
 		leaderboard.append(h3);
 		for (const record of leaderboardScores) {
-			buildScoreDiv(record, leaderboard);
+			const scoreDiv = document.createElement("div");
+			scoreDiv.className = "score";
+
+			const username = document.createElement("p");
+			username.innerHTML = record.player.username;
+			const score = document.createElement("p");
+			score.innerHTML = record.number;
+
+			scoreDiv.append(username);
+			scoreDiv.append(score);
+
+			leaderboard.append(scoreDiv);
 		}
 	});
-}
-
-function buildScoreDiv(object, leaderboard) {
-	const scoreDiv = document.createElement("div");
-	scoreDiv.className = "score";
-
-	const username = document.createElement("p");
-	username.innerHTML = object.player.username;
-	const score = document.createElement("p");
-	score.innerHTML = object.number;
-
-	scoreDiv.append(username);
-	scoreDiv.append(score);
-
-	leaderboard.append(scoreDiv);
 }
