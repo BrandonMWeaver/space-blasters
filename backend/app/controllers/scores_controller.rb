@@ -1,12 +1,12 @@
 class ScoresController < ApplicationController
 
 	def index
-		render json: Score.top_ten, include: { player: { only: [:username] } }
+		render json: ScoreSerializer.new(Score.top_ten).serialize
 	end
 
 	def create
 		score = Score.create(number: params[:number], player_id: params[:id])
-		render json: score, include: { player: { only: [:username] } }
+		render json: ScoreSerializer.new(score).serialize
 	end
 
 end
