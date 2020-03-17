@@ -38,6 +38,44 @@ addEventListener("click", event => {
 	if (event.target.id === "find") {
 		postTo("sessions");
 	}
+
+	if (event.target.id === "reverse") {
+		const reverseScores = [];
+
+		let j = 0;
+		let tempUsername;
+		let tempScore;
+		let userUsernames = [];
+		let userScores = [];
+		for (const element of document.querySelectorAll("p#score")) {
+			if (j % 2 === 0) {
+				tempUsername = element.innerHTML;
+				userUsernames.push(tempUsername);
+			}
+			else {
+				tempScore = element.innerHTML;
+				userScores.push(tempScore);
+			}
+			j++;
+		}
+
+		for (let i = 0; i < userUsernames.length; i++) {
+			reverseScores.push({ player: { username: userUsernames[i] }, number: userScores[i] });
+		}
+
+		const leaderboard = document.querySelector(".leaderboard");
+		while(leaderboard.firstChild) {
+			leaderboard.firstChild.remove();
+		}
+
+		const h3 = document.createElement("h3");
+		h3.innerHTML = "Leaderboard";
+		leaderboard.append(h3);
+
+		for (let i = reverseScores.length - 1; i >= 0; i--) {
+			buildScoreDiv(reverseScores[i], leaderboard);
+		}
+	}
 });
 
 function update() {
@@ -255,8 +293,10 @@ function buildScoreDiv(object, leaderboard) {
 	scoreDiv.className = "score";
 
 	const username = document.createElement("p");
+	username.id = "score";
 	username.innerHTML = object.player.username;
 	const score = document.createElement("p");
+	score.id = "score";
 	score.innerHTML = object.number;
 
 	scoreDiv.append(username);
