@@ -59,7 +59,8 @@ addEventListener("click", event => {
 			j++;
 		}
 
-		for (let i = 0; i < userUsernames.length; i++) {
+		usernamesLength = userUsernames.length
+		for (let i = 0; i < usernamesLength; i++) {
 			reverseScores.push({ player: { username: userUsernames[i] }, number: userScores[i] });
 		}
 
@@ -72,8 +73,11 @@ addEventListener("click", event => {
 		h3.innerHTML = "Leaderboard";
 		leaderboard.append(h3);
 
-		for (let i = reverseScores.length - 1; i >= 0; i--) {
-			buildScoreDiv(reverseScores[i], leaderboard);
+		reverseScoresLength = reverseScores.length
+		if (reverseScoresLength > 0) {
+			for (let i = reverseScoresLength - 1; i >= 0; i--) {
+				buildScoreDiv(reverseScores[i], leaderboard);
+			}
 		}
 	}
 });
